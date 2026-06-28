@@ -33,7 +33,7 @@
             .a4-poster {
                 transform-origin: top left;
                 transform: scale(calc(100vw / 794));
-                margin-bottom: calc(1123px * (100vw / 794) - 1123px); /* Menghapus sisa ruang kosong di bawah */
+                margin-bottom: calc(1123px * (100vw / 794) - 1123px);
             }
         }
 
@@ -116,25 +116,56 @@
         .qr-demo { text-align: center; }
         .qr-demo img { width: 90px; height: 90px; object-fit: contain; }
 
-        /* --- FOOTER (FOTO PROFIL) --- */
+        /* --- BAGIAN BAWAH (TOMBOL & PROFIL) --- */
+        .bottom-section {
+            position: absolute;
+            bottom: 55px; /* Dinaikkan agar tidak mepet bawah */
+            left: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Jarak antara tombol dan foto profil */
+        }
+
+        /* Desain Tombol GitHub */
+        .btn-repo {
+            background-color: #24292e;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.3s ease;
+            border: 2px solid #24292e;
+        }
+        .btn-repo:hover {
+            background-color: #ffffff;
+            color: #24292e;
+        }
+
+        /* Footer Foto Profil */
         .footer-profiles {
             display: flex;
             justify-content: space-between;
-            gap: 5px;
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
+            width: 100%;
+            gap: 10px;
         }
         .profile-card { text-align: center; flex: 1; }
+        
+        /* Desain Foto 3x4 */
         .profile-img {
-            width: 65px; height: 65px;
-            border-radius: 50%;
-            border: 3px solid #1a365d;
+            width: 66px; 
+            height: 88px; /* Rasio 3x4 */
+            border-radius: 6px; /* Sedikit melengkung di ujungnya agar tidak tajam */
+            border: 2px solid #1a365d;
             object-fit: cover;
             margin-bottom: 5px;
             background-color: #cbd5e1;
         }
+
         .profile-info {
             border: 1px solid #94a3b8;
             border-radius: 5px;
@@ -238,27 +269,35 @@
 
         </div>
 
-        <div class="footer-profiles">
-            <div class="profile-card">
-                <img src="images/foto-bintang.jpg" alt="Bintang" class="profile-img">
-                <div class="profile-info">Bintang Briliansyah<br><span>3.32.23.0.08</span></div>
+        <div class="bottom-section">
+            
+            <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn-repo">
+                Buka File & Source Code GitHub
+            </a>
+
+            <div class="footer-profiles">
+                <div class="profile-card">
+                    <img src="images/foto-bintang.jpg" alt="Bintang" class="profile-img">
+                    <div class="profile-info">Bintang Briliansyah<br><span>3.32.23.0.08</span></div>
+                </div>
+                <div class="profile-card">
+                    <img src="images/foto-habib.jpg" alt="Habib" class="profile-img">
+                    <div class="profile-info">Habib Husein B.<br><span>3.32.23.0.11</span></div>
+                </div>
+                <div class="profile-card">
+                    <img src="images/foto-khusna.jpg" alt="Khusna" class="profile-img">
+                    <div class="profile-info">Khusna Khasanatur R.<br><span>3.32.23.0.12</span></div>
+                </div>
+                <div class="profile-card">
+                    <img src="images/foto-dosen1.jpg" alt="Dosen 1" class="profile-img">
+                    <div class="profile-info">Nama Dosen 1<br><span>NIP/Gelar</span></div>
+                </div>
+                <div class="profile-card">
+                    <img src="images/foto-dosen2.jpg" alt="Dosen 2" class="profile-img">
+                    <div class="profile-info">Nama Dosen 2<br><span>NIP/Gelar</span></div>
+                </div>
             </div>
-            <div class="profile-card">
-                <img src="images/foto-habib.jpg" alt="Habib" class="profile-img">
-                <div class="profile-info">Habib Husein B.<br><span>3.32.23.0.11</span></div>
-            </div>
-            <div class="profile-card">
-                <img src="images/foto-khusna.jpg" alt="Khusna" class="profile-img">
-                <div class="profile-info">Khusna Khasanatur R.<br><span>3.32.23.0.12</span></div>
-            </div>
-            <div class="profile-card">
-                <img src="images/foto-dosen1.jpg" alt="Dosen 1" class="profile-img">
-                <div class="profile-info">Nama Dosen 1<br><span>NIP/Gelar</span></div>
-            </div>
-            <div class="profile-card">
-                <img src="images/foto-dosen2.jpg" alt="Dosen 2" class="profile-img">
-                <div class="profile-info">Nama Dosen 2<br><span>NIP/Gelar</span></div>
-            </div>
+
         </div>
 
     </div>
