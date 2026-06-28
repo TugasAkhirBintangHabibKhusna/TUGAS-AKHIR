@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster A4 Tugas Akhir Polines - Modern Design</title>
+    <title>Poster A4 Tugas Akhir Polines - Modern Design with Integrated Industrial Background</title>
     <style>
         /* Tampilan Background Luar (Dark Mode ala PDF) */
         body {
@@ -14,11 +14,18 @@
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
+            -webkit-print-color-adjust: exact; /* Pastikan warna cetak akurat */
         }
 
-        /* Ukuran Kertas A4 Standar dengan Gradasi Halus */
+        /* Ukuran Kertas A4 Standar dengan Latar Belakang Industri Terintegrasi */
         .a4-poster {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background-color: #f0f4f8; /* Warna kertas dasar semi-dingin */
+            /* Gunakan gambar latar belakang industri yang samar */
+            background-image: 
+                linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), /* Lapisan semi-transparan untuk kontras */
+                url('images/background-industrial-subtle.jpg'); /* GANTI DENGAN LINK GAMBAR ANDA */
+            background-size: cover;
+            background-position: center;
             width: 794px;
             height: 1123px;
             box-sizing: border-box;
@@ -26,6 +33,7 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: relative;
             color: #334155;
+            page-break-after: always;
         }
 
         /* Auto-Scale untuk Layar HP */
@@ -36,6 +44,29 @@
                 transform: scale(calc(100vw / 794));
                 margin-bottom: calc(1123px * (100vw / 794) - 1123px);
             }
+        }
+
+        /* --- KODE KHUSUS UNTUK CETAK (PRINT KE PDF) --- */
+        @media print {
+            @page { size: A4; margin: 0; } /* Menghilangkan margin bawaan browser */
+            body { background-color: white; padding: 0; -webkit-print-color-adjust: exact; }
+            .a4-poster { 
+                box-shadow: none; 
+                transform: none !important; 
+                margin: 0; 
+                width: 794px; 
+                height: 1123px; 
+                page-break-after: avoid; 
+                page-break-inside: avoid;
+                /* Pastikan latar belakang industri tercetak */
+                background-color: #f0f4f8 !important;
+                background-image: 
+                    linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), 
+                    url('images/background-industrial-subtle.jpg') !important;
+                background-size: cover !important;
+                background-position: center !important;
+            }
+            .btn-repo { display: none; } /* Menyembunyikan tombol GitHub saat dicetak */
         }
 
         /* --- HEADER & BANNER --- */
@@ -62,7 +93,7 @@
         .intro-row {
             display: flex;
             gap: 15px;
-            height: 160px;
+            height: 155px;
             margin-bottom: 25px;
         }
         .intro-img {
@@ -81,13 +112,13 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 15px;
-            height: 520px;
+            height: 490px;
         }
         .column { display: flex; flex-direction: column; gap: 20px; }
 
-        /* --- DESAIN KOTAK (MODERN CARDS) --- */
+        /* --- DESAIN KOTAK (MODERN CARDS) DENGAN KONTRAS TINGGI --- */
         .box {
-            background-color: #ffffff;
+            background-color: #ffffff; /* Latar belakang putih padat untuk kontras terbaik */
             border-radius: 10px;
             padding: 22px 12px 12px;
             position: relative;
@@ -95,11 +126,10 @@
             text-align: justify;
             box-sizing: border-box;
             line-height: 1.4;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid #3b82f6; /* Aksen garis biru di atas kotak */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* Bayangan lebih jelas */
+            border-top: 4px solid #3b82f6; 
             transition: transform 0.2s ease;
         }
-        .box:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
         
         .box-title {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -114,35 +144,36 @@
             white-space: nowrap;
             box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
             letter-spacing: 0.5px;
+            border: 2px solid #ffffff;
         }
         
         .box img { width: 100%; border-radius: 6px; margin-top: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
         .box ul { padding-left: 20px; margin: 5px 0 0 0; }
         
         .electrical-images { display: flex; gap: 8px; }
-        .electrical-images img { width: 48%; height: 80px; object-fit: cover; }
+        .electrical-images img { width: 48%; height: 75px; object-fit: cover; }
         .qr-demo { text-align: center; }
-        .qr-demo img { width: 90px; height: 90px; object-fit: contain; box-shadow: none; }
+        .qr-demo img { width: 85px; height: 85px; object-fit: contain; box-shadow: none; }
 
-        /* --- BAGIAN BAWAH (TOMBOL & PROFIL) --- */
+        /* --- BAGIAN BAWAH (TOMBOL & PROFIL) - POSISI AMAN CEK --- */
         .bottom-section {
             position: absolute;
-            bottom: 50px;
+            bottom: 70px; /* Posisi terangkat untuk print-safe */
             left: 30px;
             right: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
         }
 
-        /* Desain Tombol GitHub yang Keren */
+        /* Desain Tombol GitHub */
         .btn-repo {
             background: linear-gradient(135deg, #1e293b, #334155);
             color: #ffffff;
             text-decoration: none;
             padding: 10px 30px;
-            border-radius: 25px; /* Dibuat lebih membulat */
+            border-radius: 25px; 
             font-weight: bold;
             font-size: 13px;
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
@@ -150,6 +181,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            border: 2px solid #334155;
         }
         .btn-repo:hover {
             background: linear-gradient(135deg, #0f172a, #1e293b);
