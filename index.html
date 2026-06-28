@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster A4 Tugas Akhir Polines</title>
+    <title>Poster A4 Tugas Akhir Polines - Modern Design</title>
     <style>
-        /* Tampilan Background ala PDF Viewer */
+        /* Tampilan Background Luar (Dark Mode ala PDF) */
         body {
-            background-color: #525659;
+            background-color: #1e293b;
             margin: 0;
             padding: 20px 0;
             display: flex;
             justify-content: center;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
         }
 
-        /* Ukuran Kertas A4 Standar (794 x 1123 pixel) */
+        /* Ukuran Kertas A4 Standar dengan Gradasi Halus */
         .a4-poster {
-            background-color: #ffffff;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             width: 794px;
             height: 1123px;
             box-sizing: border-box;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: relative;
+            color: #334155;
         }
 
-        /* Trik agar tampilan menyesuaikan (Zoom-Out) otomatis di layar HP */
+        /* Auto-Scale untuk Layar HP */
         @media screen and (max-width: 800px) {
             body { padding: 0; align-items: flex-start; }
             .a4-poster {
@@ -38,23 +39,24 @@
         }
 
         /* --- HEADER & BANNER --- */
-        .header-top { text-align: center; margin-bottom: 10px; height: 35px; }
+        .header-top { text-align: center; margin-bottom: 15px; height: 35px; }
         .header-top img { height: 100%; object-fit: contain; }
         
         .banner {
-            background-color: #4a779d;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a);
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            height: 70px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            height: 75px;
             box-sizing: border-box;
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
         }
-        .banner img { width: 60px; height: 60px; object-fit: contain; }
-        .banner h1 { font-size: 15px; text-align: center; text-transform: uppercase; margin: 0; line-height: 1.3; }
+        .banner img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .banner h1 { font-size: 15px; text-align: center; text-transform: uppercase; margin: 0; line-height: 1.3; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 
         /* --- LAYOUT GRID UTAMA --- */
         .intro-row {
@@ -65,12 +67,13 @@
         }
         .intro-img {
             flex: 1;
-            border: 2px solid #4a779d;
-            border-radius: 8px;
+            border-radius: 12px;
             object-fit: cover;
             width: 100%;
             height: 100%;
-            background-color: #e2e8f0;
+            background-color: #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 3px solid #ffffff;
         }
         .intro-box { flex: 1.5; margin-bottom: 0 !important; }
 
@@ -80,70 +83,78 @@
             gap: 15px;
             height: 520px;
         }
-        .column { display: flex; flex-direction: column; }
+        .column { display: flex; flex-direction: column; gap: 20px; }
 
-        /* --- DESAIN KOTAK (BOX) --- */
+        /* --- DESAIN KOTAK (MODERN CARDS) --- */
         .box {
-            border: 2px solid #4a779d;
-            border-radius: 8px;
-            padding: 18px 10px 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 22px 12px 12px;
             position: relative;
-            background-color: #f9fbfc;
             font-size: 11px;
             text-align: justify;
-            margin-bottom: 20px;
             box-sizing: border-box;
-            line-height: 1.3;
+            line-height: 1.4;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid #3b82f6; /* Aksen garis biru di atas kotak */
+            transition: transform 0.2s ease;
         }
+        .box:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        
         .box-title {
-            background-color: #a4bdfc;
-            color: #1a365d;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
             font-weight: bold;
-            padding: 4px 15px;
-            border-radius: 12px;
+            padding: 5px 18px;
+            border-radius: 20px;
             position: absolute;
-            top: -12px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+            letter-spacing: 0.5px;
         }
-        .box img { width: 100%; border-radius: 4px; margin-top: 5px; background-color: #e2e8f0; }
+        
+        .box img { width: 100%; border-radius: 6px; margin-top: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
         .box ul { padding-left: 20px; margin: 5px 0 0 0; }
         
-        .electrical-images { display: flex; gap: 5px; }
-        .electrical-images img { width: 49%; height: 80px; object-fit: cover; }
+        .electrical-images { display: flex; gap: 8px; }
+        .electrical-images img { width: 48%; height: 80px; object-fit: cover; }
         .qr-demo { text-align: center; }
-        .qr-demo img { width: 90px; height: 90px; object-fit: contain; }
+        .qr-demo img { width: 90px; height: 90px; object-fit: contain; box-shadow: none; }
 
         /* --- BAGIAN BAWAH (TOMBOL & PROFIL) --- */
         .bottom-section {
             position: absolute;
-            bottom: 55px; /* Dinaikkan agar tidak mepet bawah */
+            bottom: 50px;
             left: 30px;
             right: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* Jarak antara tombol dan foto profil */
+            gap: 25px;
         }
 
-        /* Desain Tombol GitHub */
+        /* Desain Tombol GitHub yang Keren */
         .btn-repo {
-            background-color: #24292e;
+            background: linear-gradient(135deg, #1e293b, #334155);
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 25px;
-            border-radius: 6px;
+            padding: 10px 30px;
+            border-radius: 25px; /* Dibuat lebih membulat */
             font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background 0.3s ease;
-            border: 2px solid #24292e;
+            font-size: 13px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .btn-repo:hover {
-            background-color: #ffffff;
-            color: #24292e;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
         }
 
         /* Footer Foto Profil */
@@ -151,31 +162,34 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            gap: 10px;
+            gap: 15px;
         }
         .profile-card { text-align: center; flex: 1; }
         
-        /* Desain Foto 3x4 */
+        /* Desain Foto 3x4 Modern */
         .profile-img {
             width: 66px; 
-            height: 88px; /* Rasio 3x4 */
-            border-radius: 6px; /* Sedikit melengkung di ujungnya agar tidak tajam */
-            border: 2px solid #1a365d;
+            height: 88px; 
+            border-radius: 8px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             object-fit: cover;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             background-color: #cbd5e1;
         }
 
         .profile-info {
-            border: 1px solid #94a3b8;
-            border-radius: 5px;
-            padding: 4px;
-            font-size: 9px;
             background-color: #ffffff;
+            border-radius: 6px;
+            padding: 5px;
+            font-size: 9px;
             font-weight: bold;
-            line-height: 1.2;
+            line-height: 1.3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
         }
-        .profile-info span { font-weight: normal; }
+        .profile-info span { font-weight: normal; color: #64748b; }
     </style>
 </head>
 <body>
@@ -225,7 +239,7 @@
                 <div class="box">
                     <div class="box-title">HMI Design</div>
                     <img src="images/img-hmi.jpg" alt="HMI Design" style="height: 70px; object-fit: cover;">
-                    <p style="text-align: center; margin-bottom: 0;">The figure shows the HMI design for system monitoring</p>
+                    <p style="text-align: center; margin-bottom: 0; color: #64748b; font-size: 10px;">The figure shows the HMI design for system monitoring</p>
                 </div>
             </div>
 
@@ -255,7 +269,7 @@
             <div class="column">
                 <div class="box" style="flex: 1;">
                     <div class="box-title">Flowchart</div>
-                    <img src="images/img-flowchart.jpg" alt="Flowchart System" style="height: 85%; object-fit: contain;">
+                    <img src="images/img-flowchart.jpg" alt="Flowchart System" style="height: 85%; object-fit: contain; box-shadow: none;">
                 </div>
 
                 <div class="box">
@@ -272,7 +286,7 @@
         <div class="bottom-section">
             
             <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn-repo">
-                Buka File & Source Code GitHub
+                &#128279; Buka File & Source Code GitHub
             </a>
 
             <div class="footer-profiles">
