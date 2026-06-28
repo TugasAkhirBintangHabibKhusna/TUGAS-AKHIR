@@ -3,197 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster Tugas Akhir Polines</title>
+    <title>Poster A4 Tugas Akhir Polines</title>
     <style>
+        /* Tampilan Background ala PDF Viewer */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e2e8f0; /* Warna background luar */
+            background-color: #525659;
             margin: 0;
-            padding: 20px;
+            padding: 20px 0;
             display: flex;
             justify-content: center;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Kontainer Utama Kertas Poster (A4 Ratio) */
-        .poster {
+        /* Ukuran Kertas A4 Standar (794 x 1123 pixel) */
+        .a4-poster {
             background-color: #ffffff;
-            width: 900px; /* Ukuran standar poster web */
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 794px;
+            height: 1123px;
             box-sizing: border-box;
-            color: #333;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        /* HEADER (Logo & Judul) */
-        .header-top {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
+        /* Trik agar tampilan menyesuaikan (Zoom-Out) otomatis di layar HP */
+        @media screen and (max-width: 800px) {
+            body { padding: 0; align-items: flex-start; }
+            .a4-poster {
+                transform-origin: top left;
+                transform: scale(calc(100vw / 794));
+                margin-bottom: calc(1123px * (100vw / 794) - 1123px); /* Menghapus sisa ruang kosong di bawah */
+            }
         }
-        .header-top img {
-            height: 40px; /* Sesuaikan ukuran logo teks polines */
-        }
+
+        /* --- HEADER & BANNER --- */
+        .header-top { text-align: center; margin-bottom: 10px; height: 35px; }
+        .header-top img { height: 100%; object-fit: contain; }
+        
         .banner {
             background-color: #4a779d;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
+            padding: 10px 20px;
             border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        .banner-logo {
+            margin-bottom: 20px;
             height: 70px;
-            width: 70px;
-            object-fit: contain;
+            box-sizing: border-box;
         }
-        .banner-title {
-            text-align: center;
-            flex-grow: 1;
-            padding: 0 20px;
-        }
-        .banner-title h1 {
-            margin: 0;
-            font-size: 18px;
-            text-transform: uppercase;
-            line-height: 1.4;
-        }
+        .banner img { width: 60px; height: 60px; object-fit: contain; }
+        .banner h1 { font-size: 15px; text-align: center; text-transform: uppercase; margin: 0; line-height: 1.3; }
 
-        /* BARIS INTRODUKSI (Gambar - Teks - Gambar) */
+        /* --- LAYOUT GRID UTAMA --- */
         .intro-row {
             display: flex;
             gap: 15px;
-            margin-bottom: 30px;
-            align-items: stretch;
+            height: 160px;
+            margin-bottom: 25px;
         }
         .intro-img {
             flex: 1;
-            border-radius: 8px;
             border: 2px solid #4a779d;
+            border-radius: 8px;
             object-fit: cover;
             width: 100%;
+            height: 100%;
+            background-color: #e2e8f0;
         }
-        
-        /* KOTAK KONTEN UMUM (Boxes) */
+        .intro-box { flex: 1.5; margin-bottom: 0 !important; }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            height: 520px;
+        }
+        .column { display: flex; flex-direction: column; }
+
+        /* --- DESAIN KOTAK (BOX) --- */
         .box {
             border: 2px solid #4a779d;
             border-radius: 8px;
-            padding: 20px 15px 15px;
+            padding: 18px 10px 10px;
             position: relative;
-            margin-bottom: 30px;
             background-color: #f9fbfc;
+            font-size: 11px;
             text-align: justify;
-            font-size: 12px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            line-height: 1.3;
         }
         .box-title {
             background-color: #a4bdfc;
             color: #1a365d;
             font-weight: bold;
-            padding: 5px 20px;
-            border-radius: 15px;
+            padding: 4px 15px;
+            border-radius: 12px;
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid white;
         }
-        .box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
+        .box img { width: 100%; border-radius: 4px; margin-top: 5px; background-color: #e2e8f0; }
+        .box ul { padding-left: 20px; margin: 5px 0 0 0; }
+        
+        .electrical-images { display: flex; gap: 5px; }
+        .electrical-images img { width: 49%; height: 80px; object-fit: cover; }
+        .qr-demo { text-align: center; }
+        .qr-demo img { width: 90px; height: 90px; object-fit: contain; }
 
-        /* GRID 3 KOLOM UTAMA */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* LIST & GAMBAR DALAM KOTAK */
-        .box ul {
-            padding-left: 20px;
-            margin: 5px 0 0 0;
-        }
-        .electrical-images {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .qr-demo {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .qr-demo img {
-            width: 100px;
-        }
-
-        /* FOOTER (Foto Profil Anggota & Dosen) */
+        /* --- FOOTER (FOTO PROFIL) --- */
         .footer-profiles {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 5px;
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
         }
-        .profile-card {
-            text-align: center;
-            width: 130px;
-        }
+        .profile-card { text-align: center; flex: 1; }
         .profile-img {
-            width: 70px;
-            height: 70px;
+            width: 65px; height: 65px;
             border-radius: 50%;
             border: 3px solid #1a365d;
             object-fit: cover;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             background-color: #cbd5e1;
         }
         .profile-info {
             border: 1px solid #94a3b8;
             border-radius: 5px;
-            padding: 5px;
-            font-size: 10px;
+            padding: 4px;
+            font-size: 9px;
             background-color: #ffffff;
             font-weight: bold;
+            line-height: 1.2;
         }
-        .profile-info span {
-            display: block;
-            font-weight: normal;
-        }
+        .profile-info span { font-weight: normal; }
     </style>
 </head>
 <body>
 
-    <div class="poster">
+    <div class="a4-poster">
         
         <div class="header-top">
             <img src="images/logo-polines-text.png" alt="Politeknik Negeri Semarang">
         </div>
         
         <div class="banner">
-            <img src="images/logo-polines-bulat.png" alt="Logo Polines" class="banner-logo">
+            <img src="images/logo-polines-bulat.png" alt="Logo Polines">
             <div class="banner-title">
                 <h1>Design and Development of a Manufacturing System Stamping and Rotary Table Based on PLC Haiwell and HMI Monitoring</h1>
             </div>
-            <img src="images/logo-blu.png" alt="Logo BLU" class="banner-logo">
+            <img src="images/logo-blu.png" alt="Logo BLU">
         </div>
 
         <div class="intro-row">
-            <img src="images/img-conveyor.jpg" alt="Conveyor System" class="intro-img" style="flex: 0.8;">
+            <img src="images/img-conveyor.jpg" alt="Conveyor System" class="intro-img">
             
-            <div class="box" style="flex: 1.5; margin-bottom: 0;">
+            <div class="box intro-box">
                 <div class="box-title">Introduction</div>
                 <p style="margin-top: 5px;">To stay competitive in the industry, production efficiency must be optimized. Automation using PLCs such as integrating stamping with an automatic rotary table can speed up processes and improve accuracy. This project aims to enhance efficiency and reduce errors in production.</p>
             </div>
 
-            <img src="images/img-rotary.jpg" alt="Rotary Table" class="intro-img" style="flex: 0.8;">
+            <img src="images/img-rotary.jpg" alt="Rotary Table" class="intro-img">
         </div>
 
         <div class="main-grid">
@@ -215,7 +193,7 @@
 
                 <div class="box">
                     <div class="box-title">HMI Design</div>
-                    <img src="images/img-hmi.jpg" alt="HMI Design">
+                    <img src="images/img-hmi.jpg" alt="HMI Design" style="height: 70px; object-fit: cover;">
                     <p style="text-align: center; margin-bottom: 0;">The figure shows the HMI design for system monitoring</p>
                 </div>
             </div>
@@ -224,8 +202,8 @@
                 <div class="box">
                     <div class="box-title">Electrical</div>
                     <div class="electrical-images">
-                        <img src="images/img-electrical-1.jpg" alt="Electrical Panel 1" style="width: 48%;">
-                        <img src="images/img-electrical-2.jpg" alt="Electrical Panel 2" style="width: 48%;">
+                        <img src="images/img-electrical-1.jpg" alt="Electrical Panel 1">
+                        <img src="images/img-electrical-2.jpg" alt="Electrical Panel 2">
                     </div>
                     <p>The electronic components we used for controlling the system are the Haiwell PLC, a stepper motor driver for stepper motor control, relays, MCB, a PWM pulse controller, and a motor driver.</p>
                 </div>
@@ -238,22 +216,22 @@
                 <div class="box">
                     <div class="box-title">Video Demo</div>
                     <div class="qr-demo">
-                        <img src="images/img-qr.png" alt="QR Code Video Demo">
+                        <img src="images/img-qr.png" alt="QR Code">
                     </div>
                 </div>
             </div>
 
             <div class="column">
-                <div class="box" style="height: calc(100% - 150px);">
+                <div class="box" style="flex: 1;">
                     <div class="box-title">Flowchart</div>
-                    <img src="images/img-flowchart.jpg" alt="Flowchart System" style="width: 100%; display: block; margin: 10px auto 0;">
+                    <img src="images/img-flowchart.jpg" alt="Flowchart System" style="height: 85%; object-fit: contain;">
                 </div>
 
-                <div class="box" style="margin-top: 30px;">
+                <div class="box">
                     <div class="box-title">References</div>
-                    <ul>
+                    <ul style="padding-left: 15px;">
                         <li>Danang Adi Nugroho, A. G. (2021). Sistem Tertanam Bebasis PLC...</li>
-                        <li>Crisman Tambuan. D. W. (2024). Implementasi Haiwell Cloud Scada...</li>
+                        <li>Crisman Tambuan. D. W. (2024). Implementasi Haiwell Cloud...</li>
                     </ul>
                 </div>
             </div>
@@ -261,72 +239,28 @@
         </div>
 
         <div class="footer-profiles">
-            
             <div class="profile-card">
                 <img src="images/foto-bintang.jpg" alt="Bintang" class="profile-img">
                 <div class="profile-info">Bintang Briliansyah<br><span>3.32.23.0.08</span></div>
             </div>
-
             <div class="profile-card">
                 <img src="images/foto-habib.jpg" alt="Habib" class="profile-img">
                 <div class="profile-info">Habib Husein B.<br><span>3.32.23.0.11</span></div>
             </div>
-
             <div class="profile-card">
                 <img src="images/foto-khusna.jpg" alt="Khusna" class="profile-img">
                 <div class="profile-info">Khusna Khasanatur R.<br><span>3.32.23.0.12</span></div>
             </div>
-
             <div class="profile-card">
                 <img src="images/foto-dosen1.jpg" alt="Dosen 1" class="profile-img">
                 <div class="profile-info">Nama Dosen 1<br><span>NIP/Gelar</span></div>
             </div>
-
             <div class="profile-card">
                 <img src="images/foto-dosen2.jpg" alt="Dosen 2" class="profile-img">
                 <div class="profile-info">Nama Dosen 2<br><span>NIP/Gelar</span></div>
             </div>
-
         </div>
 
-    </div>
-
-</body>
-</html>
-        }
-    </style>
-</head>
-<body>
-
-    <div class="poster-container">
-        <div class="header-banner">
-            <h1>Tugas Akhir IoT Sorting Training Set</h1>
-            <p>Sistem Otomatisasi & Pengolahan Data Berbasis Internet of Things</p>
-        </div>
-
-        <div class="team-grid">
-            <div class="member-card">
-                <img src="images/bintang.jpg" alt="Foto Bintang" class="member-img">
-                <div class="member-name">Bintang Briliansyah</div>
-                <div class="member-nim">NIM 3.32.23.0.08</div>
-            </div>
-
-            <div class="member-card">
-                <img src="images/habib.jpg" alt="Foto Habib" class="member-img">
-                <div class="member-name">Habib Husein Baydawi</div>
-                <div class="member-nim">NIM 3.32.23.0.11</div>
-            </div>
-
-            <div class="member-card">
-                <img src="images/khusna.jpg" alt="Foto Khusna" class="member-img">
-                <div class="member-name">Khusna Khasanatur Rovia</div>
-                <div class="member-nim">NIM 3.32.23.0.12</div>
-            </div>
-        </div>
-
-        <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR/" target="_blank" class="btn-github">
-            Buka File & Source Code GitHub
-        </a>
     </div>
 
 </body>
