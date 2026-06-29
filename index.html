@@ -44,6 +44,11 @@
         .btn { padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; border: none; display: inline-block; }
         .btn-poster { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .btn-poster:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6); }
+        
+        /* TOMBOL BARU UNTUK DOWNLOAD JOBSHEET */
+        .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
+
         .btn-github { background-color: #334155; color: white; border: 1px solid #475569; }
         .btn-github:hover { background-color: #475569; transform: translateY(-3px); }
 
@@ -183,6 +188,9 @@
             
             <div class="button-group">
                 <button class="btn btn-poster" onclick="showPoster()">&#128196; Lihat Poster Web</button>
+                
+                <a href="JOBSHEET.docx" download class="btn btn-download">&#128197; Download Jobsheet (DOCX)</a>
+                
                 <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn btn-github">&#128279; Buka Source Code GitHub</a>
             </div>
         </div>
@@ -260,7 +268,7 @@
                     <div class="box">
                         <div class="box-title">Video Demo</div>
                         <div class="qr-demo">
-                            <img src="images/img-qr.png" alt="QR Code">
+                            <img src="images/images/img-qr.png" alt="QR Code">
                         </div>
                     </div>
                 </div>
