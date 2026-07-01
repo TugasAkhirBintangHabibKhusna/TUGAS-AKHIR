@@ -1,32 +1,51 @@
 #include <ModbusRTU.h>
 #include <HX711.h> 
-#include <Preferences.h> // [TAMBAHAN] Library untuk menyimpan data ke memori Flash ESP32
+#include <Preferences.h> 
 
-// Instance untuk memori internal
 Preferences prefs; 
 
 // =======================================================
-// PEMETAAN ALAMAT REGISTER MODBUS (Sesuai Struktur Anda)
+// PEMETAAN ALAMAT REGISTER MODBUS
 // =======================================================
 #define REG_SENSOR_R    0  
 #define REG_SENSOR_G    1  
 #define REG_SENSOR_B    2  
 #define REG_WARNA       3  
 #define REG_ENCODER     4  
-#define REG_BERAT_ASLI  5  // 4x5 -> Berat Asli (dikali 10)
-#define REG_BERAT_RESET 6  // 4x6 -> Berat Setelah Reset (dikali 10)
+#define REG_BERAT_ASLI  5  
+#define REG_BERAT_RESET 6  
 
-#define REG_BOX_MERAH   7  // 4x7 -> Total Box Merah
-#define REG_BOX_BIRU    8  // 4x8 -> Total Box Biru
-#define REG_BOX_LOGAM   9  // 4x9 -> Total Box Logam
+#define REG_BOX_MERAH   7  
+#define REG_BOX_BIRU    8  
+#define REG_BOX_LOGAM   9  
+
+// REGISTER INDIKATOR UNTUK HMI (4x10 - 4x16)
+#define REG_IND_SERVO1   10  // Servo 1 Merah
+#define REG_IND_SERVO2   11  // Servo 2 Biru
+#define REG_IND_SERVO3   12  // Servo 3 Pendorong
+#define REG_IND_PROX     13  // Sensor Proximity Induktif
+#define REG_IND_IR1      14  // Sensor IR 1
+#define REG_IND_IR2      15  // Sensor IR 2
+#define REG_IND_MOTOR    16  // Motor DC Conveyor
+
+// [TAMBAHAN LOGIKA BARU] REGISTER TRACKING BARANG
+#define REG_SEQ_M1 17 // Merah start
+#define REG_SEQ_M2 18 // Merah IR1
+#define REG_SEQ_M3 19 // Merah Servo 1
+#define REG_SEQ_B1 20 // Biru start
+#define REG_SEQ_B2 21 // Biru IR1
+#define REG_SEQ_B3 22 // Biru IR2
+#define REG_SEQ_B4 23 // Biru Servo 2
+#define REG_SEQ_L1 24 // Logam start
+#define REG_SEQ_L2 25 // Logam IR1
+#define REG_SEQ_L3 26 // Logam IR2
 
 // PEMETAAN ALAMAT COIL (TOMBOL HMI)
-#define REG_SAKLAR       0  // 0x0 -> Saklar Utama ke Arduino
-#define REG_SAKLAR_TARE  1  // 0x1 -> Tombol Reset Berat Timbangan
-
-#define REG_RESET_MERAH  2  // 0x2 -> Tombol Reset Counter Merah
-#define REG_RESET_BIRU   3  // 0x3 -> Tombol Reset Counter Biru
-#define REG_RESET_LOGAM  4  // 0x4 -> Tombol Reset Counter Logam
+#define REG_SAKLAR       0  
+#define REG_SAKLAR_TARE  1  
+#define REG_RESET_MERAH  2  
+#define REG_RESET_BIRU   3  
+#define REG_RESET_LOGAM  4  
 
 // =======================================================
 // PIN & SPESIFIKASI ENCODER & LOADCELL
@@ -50,7 +69,6 @@ String inputString = "";
 bool stringComplete = false;
 bool lastSaklarState = false;
 
-// VARIABEL TARE & COUNTER
 float beratAktualTerakhir = 0.0;
 float offsetTareMonitor = 0.0;
 
@@ -61,11 +79,17 @@ const unsigned long interval = 500;
 float smoothedRpm = 0.0;
 const float ALPHA = 0.50; 
 
-// VARIABEL COUNTER RAM BIASA
 uint16_t totalMerah = 0;
 uint16_t totalBiru = 0;
 uint16_t totalLogam = 0;
 uint16_t warnaTerakhir = 0; 
+
+// Variabel Tracking Sequence & Edge Detection
+uint8_t seqMerah = 0;
+uint8_t seqBiru = 0;
+uint8_t seqLogam = 0;
+int last_servo1 = 0;
+int last_servo2 = 0;
 
 void IRAM_ATTR readEncoder() {
   static uint8_t encoderState = 0;
@@ -97,14 +121,11 @@ void setup() {
   mb.begin(&SerialModbus, DE_RE_PIN);
   mb.slave(1); 
 
-  // [TAMBAHAN] Buka ruang penyimpanan bernama "hitungBox"
   prefs.begin("hitungBox", false); 
-  // Ambil nilai terakhir yang tersimpan sebelum mati. Kalau kosong/baru pertama kali, beri nilai 0.
   totalMerah = prefs.getUShort("merah", 0);
   totalBiru  = prefs.getUShort("biru", 0);
   totalLogam = prefs.getUShort("logam", 0);
 
-  // Daftarkan Holding Register & Langsung isi dengan nilai yang berhasil diselamatkan dari memori flash
   mb.addHreg(REG_SENSOR_R, 0);
   mb.addHreg(REG_SENSOR_G, 0);
   mb.addHreg(REG_SENSOR_B, 0);
@@ -112,19 +133,39 @@ void setup() {
   mb.addHreg(REG_ENCODER, 0); 
   mb.addHreg(REG_BERAT_ASLI, 0);  
   mb.addHreg(REG_BERAT_RESET, 0); 
-  mb.addHreg(REG_BOX_MERAH, totalMerah); // Masukkan nilai terselamatkan ke HMI   
-  mb.addHreg(REG_BOX_BIRU, totalBiru);   // Masukkan nilai terselamatkan ke HMI 
-  mb.addHreg(REG_BOX_LOGAM, totalLogam); // Masukkan nilai terselamatkan ke HMI    
+  mb.addHreg(REG_BOX_MERAH, totalMerah);   
+  mb.addHreg(REG_BOX_BIRU, totalBiru);   
+  mb.addHreg(REG_BOX_LOGAM, totalLogam);    
 
-  // Daftarkan Coil Bit
+  // Daftarkan register indikator ke Modbus HMI
+  mb.addHreg(REG_IND_SERVO1, 0);
+  mb.addHreg(REG_IND_SERVO2, 0);
+  mb.addHreg(REG_IND_SERVO3, 0);
+  mb.addHreg(REG_IND_PROX, 0);
+  mb.addHreg(REG_IND_IR1, 0);
+  mb.addHreg(REG_IND_IR2, 0);
+  mb.addHreg(REG_IND_MOTOR, 0);
+
+  // Mendaftarkan register sekuens ke Modbus HMI
+  mb.addHreg(REG_SEQ_M1, 0);
+  mb.addHreg(REG_SEQ_M2, 0);
+  mb.addHreg(REG_SEQ_M3, 0);
+  mb.addHreg(REG_SEQ_B1, 0);
+  mb.addHreg(REG_SEQ_B2, 0);
+  mb.addHreg(REG_SEQ_B3, 0);
+  mb.addHreg(REG_SEQ_B4, 0);
+  mb.addHreg(REG_SEQ_L1, 0);
+  mb.addHreg(REG_SEQ_L2, 0);
+  mb.addHreg(REG_SEQ_L3, 0);
+
   mb.addCoil(REG_SAKLAR, false);
   mb.addCoil(REG_SAKLAR_TARE, false); 
   mb.addCoil(REG_RESET_MERAH, false); 
   mb.addCoil(REG_RESET_BIRU, false);  
   mb.addCoil(REG_RESET_LOGAM, false); 
 
-  inputString.reserve(40);
-  Serial.println("ESP32 Aktif - Mode Proteksi Memori Nilai Warna Aktif!");
+  inputString.reserve(60); 
+  Serial.println("ESP32 Ready - Indikator Modbus Aktif!");
 }
 
 void loop() {
@@ -158,12 +199,12 @@ void loop() {
     lastSaklarState = currentSaklarState;
   }
 
-  // 3. BACA BALASAN DATA SENSOR DARI ARDUINO (Dibersihkan dari \r agar lancar)
+  // 3. BACA BALASAN DATA DARI ARDUINO
   while (SerialArduino.available()) {
     char inChar = (char)SerialArduino.read();
     if (inChar == '\n') {
       stringComplete = true;
-    } else if (inChar != '\r') { // Mengabaikan karakter pembawa masalah
+    } else if (inChar != '\r') { 
       inputString += inChar;
     }
   }
@@ -180,23 +221,23 @@ void loop() {
     mb.Coil(REG_SAKLAR_TARE, false); 
   }
 
-  // 5. RESET VARIABEL COUNTER (Juga menghapus nilai di memori flash menjadi 0)
+  // 5. RESET VARIABEL COUNTER 
   if (mb.Coil(REG_RESET_MERAH) == true) { 
     totalMerah = 0; 
     mb.Hreg(REG_BOX_MERAH, 0); 
-    prefs.putUShort("merah", 0); // [MODIFIKASI] Reset flash merah
+    prefs.putUShort("merah", 0); 
     mb.Coil(REG_RESET_MERAH, false); 
   }
   if (mb.Coil(REG_RESET_BIRU) == true)  { 
     totalBiru = 0;  
     mb.Hreg(REG_BOX_BIRU, 0);  
-    prefs.putUShort("biru", 0);  // [MODIFIKASI] Reset flash biru
+    prefs.putUShort("biru", 0);  
     mb.Coil(REG_RESET_BIRU, false); 
   }
   if (mb.Coil(REG_RESET_LOGAM) == true) { 
     totalLogam = 0; 
     mb.Hreg(REG_BOX_LOGAM, 0); 
-    prefs.putUShort("logam", 0); // [MODIFIKASI] Reset flash logam
+    prefs.putUShort("logam", 0); 
     mb.Coil(REG_RESET_LOGAM, false); 
   }
 
@@ -218,52 +259,158 @@ void loop() {
 }
 
 // =======================================================
-// BAGIAN PENGIRIMAN WARNA YANG DISAMAKAN & DIPERBAIKI (ANTI SPASI/GAIB)
+// DEKODER DATA SERI BARU DARI ARDUINO + UPDATE KE HMI
 // =======================================================
 void parseArduinoData(String data) {
-  data.trim(); // Menghapus spasi gaib di awal/akhir baris teks
+  data.trim(); 
   
-  int firstComma = data.indexOf(',');
-  int secondComma = data.indexOf(',', firstComma + 1);
+  int values[10] = {0};
+  int count = 0;
+  int startIndex = 0;
+  int commaIndex = data.indexOf(',');
+  
+  while (commaIndex != -1 && count < 9) {
+    String token = data.substring(startIndex, commaIndex);
+    token.trim();
+    values[count++] = token.toInt();
+    startIndex = commaIndex + 1;
+    commaIndex = data.indexOf(',', startIndex);
+  }
+  if (startIndex < data.length()) {
+    String token = data.substring(startIndex);
+    token.trim();
+    values[count++] = token.toInt();
+  }
 
-  if (firstComma != -1 && secondComma != -1) {
-    String rStr = data.substring(0, firstComma);
-    String bStr = data.substring(firstComma + 1, secondComma);
-    String wStr = data.substring(secondComma + 1);
+  // Jika minimal data warna inti terisi
+  if (count >= 3) {
+    uint16_t rVal = values[0];
+    uint16_t bVal = values[1];
+    uint16_t wVal = values[2];
 
-    // Pembersihan ekstra pada potongan teks string sebelum masuk ke HMI
-    rStr.trim();
-    bStr.trim();
-    wStr.trim();
-
-    uint16_t rVal = rStr.toInt();
-    uint16_t bVal = bStr.toInt();
-    uint16_t wVal = wStr.toInt();
-
-    // Kirim langsung nilai murni ke register HMI Haiwell
     mb.Hreg(REG_SENSOR_R, rVal);
     mb.Hreg(REG_SENSOR_G, 0); 
     mb.Hreg(REG_SENSOR_B, bVal);
-    mb.Hreg(REG_WARNA, wVal); // <--- Menjamin REG_WARNA terisi angka murni (1, 2, atau 3)
+    mb.Hreg(REG_WARNA, wVal); 
 
-    // Logika penambahan counter biasa (RAM) berdasarkan wVal murni + Backup Flash otomatis
     if (wVal != warnaTerakhir) { 
       if (wVal == 1) {       
         totalMerah++;
         mb.Hreg(REG_BOX_MERAH, totalMerah);
-        prefs.putUShort("merah", totalMerah); // [TAMBAHAN] Amankan nilai merah ke flash
+        prefs.putUShort("merah", totalMerah); 
+        
+        seqMerah = 1;
+        mb.Hreg(REG_SEQ_M1, 1);
       } 
       else if (wVal == 2) {  
         totalBiru++;
         mb.Hreg(REG_BOX_BIRU, totalBiru);
-        prefs.putUShort("biru", totalBiru);   // [TAMBAHAN] Amankan nilai biru ke flash
+        prefs.putUShort("biru", totalBiru);   
+        
+        seqBiru = 1;
+        mb.Hreg(REG_SEQ_B1, 1);
       } 
       else if (wVal == 3) {  
         totalLogam++;
         mb.Hreg(REG_BOX_LOGAM, totalLogam);
-        prefs.putUShort("logam", totalLogam); // [TAMBAHAN] Amankan nilai logam ke flash
+        prefs.putUShort("logam", totalLogam); 
+        
+        seqLogam = 1;
+        mb.Hreg(REG_SEQ_L1, 1);
       }
       warnaTerakhir = wVal; 
     }
+  }
+
+  // Jika data indikator lengkap 10 kolom, masukkan ke HMI
+  if (count == 10) {
+    mb.Hreg(REG_IND_SERVO1, values[3]);
+    mb.Hreg(REG_IND_SERVO2, values[4]);
+    mb.Hreg(REG_IND_SERVO3, values[5]);
+    mb.Hreg(REG_IND_PROX,   values[6]);
+    mb.Hreg(REG_IND_IR1,    values[7]);
+    mb.Hreg(REG_IND_IR2,    values[8]);
+    mb.Hreg(REG_IND_MOTOR,  values[9]);
+
+    // ==========================================================
+    // [PEMBARUAN LOGIKA] - EKSEKUSI SEQUENCE DENGAN FORCE LOW
+    // ==========================================================
+    int servo1 = values[3];
+    int servo2 = values[4];
+    int servo3 = values[5];
+    int ir1    = values[7];
+    int ir2    = values[8];
+
+    // --- SEQUENCE MERAH ---
+    if (seqMerah == 1 && ir1 == 1) {
+      seqMerah = 2;
+      mb.Hreg(REG_SEQ_M2, 1); // Reg 18 High
+      mb.Hreg(REG_SEQ_M1, 0); // Reg 17 Pasti Low
+    }
+    else if (seqMerah == 2 && last_servo1 == 1 && servo1 == 0) { 
+      seqMerah = 3;
+      mb.Hreg(REG_SEQ_M3, 1); // Reg 19 High
+      mb.Hreg(REG_SEQ_M2, 0); // Reg 18 Pasti Low
+      mb.Hreg(REG_SEQ_M1, 0); // Reg 17 Pasti Low
+    }
+
+    // --- SEQUENCE BIRU ---
+    if (seqBiru == 1 && ir1 == 1) {
+      seqBiru = 2;
+      mb.Hreg(REG_SEQ_B2, 1); // Reg 21 High
+      mb.Hreg(REG_SEQ_B1, 0); // Reg 20 Pasti Low
+    }
+    else if (seqBiru == 2 && ir2 == 1) {
+      seqBiru = 3;
+      mb.Hreg(REG_SEQ_B3, 1); // Reg 22 High
+      mb.Hreg(REG_SEQ_B2, 0); // Reg 21 Pasti Low
+      mb.Hreg(REG_SEQ_B1, 0); // Reg 20 Pasti Low
+    }
+    else if (seqBiru == 3 && last_servo2 == 1 && servo2 == 0) { 
+      seqBiru = 4;
+      mb.Hreg(REG_SEQ_B4, 1); // Reg 23 High
+      mb.Hreg(REG_SEQ_B3, 0); // Reg 22 Pasti Low
+      mb.Hreg(REG_SEQ_B2, 0); // Reg 21 Pasti Low
+      mb.Hreg(REG_SEQ_B1, 0); // Reg 20 Pasti Low
+    }
+
+    // --- SEQUENCE LOGAM ---
+    if (seqLogam == 1 && ir1 == 1) {
+      seqLogam = 2;
+      mb.Hreg(REG_SEQ_L2, 1); // Reg 25 High
+      mb.Hreg(REG_SEQ_L1, 0); // Reg 24 Pasti Low
+    }
+    else if (seqLogam == 2 && ir2 == 1) {
+      seqLogam = 3;
+      mb.Hreg(REG_SEQ_L3, 1); // Reg 26 High
+      mb.Hreg(REG_SEQ_L2, 0); // Reg 25 Pasti Low
+      mb.Hreg(REG_SEQ_L1, 0); // Reg 24 Pasti Low
+    }
+
+    // ==========================================================
+    // [PEMBARUAN LOGIKA] - RESET GLOBAL JIKA SERVO 3 (PENDORONG) HIGH
+    // ==========================================================
+    if (servo3 == 1) {
+      // Reset semua status tracking internal
+      seqMerah = 0;
+      seqBiru = 0;
+      seqLogam = 0;
+
+      // Matikan (LOW) paksa semua register dari 17 sampai 26
+      mb.Hreg(REG_SEQ_M1, 0); // Reg 17
+      mb.Hreg(REG_SEQ_M2, 0); // Reg 18
+      mb.Hreg(REG_SEQ_M3, 0); // Reg 19
+      mb.Hreg(REG_SEQ_B1, 0); // Reg 20
+      mb.Hreg(REG_SEQ_B2, 0); // Reg 21
+      mb.Hreg(REG_SEQ_B3, 0); // Reg 22
+      mb.Hreg(REG_SEQ_B4, 0); // Reg 23
+      mb.Hreg(REG_SEQ_L1, 0); // Reg 24
+      mb.Hreg(REG_SEQ_L2, 0); // Reg 25
+      mb.Hreg(REG_SEQ_L3, 0); // Reg 26
+    }
+
+    // Simpan status servo saat ini untuk iterasi berikutnya (penting untuk deteksi High->Low)
+    last_servo1 = servo1;
+    last_servo2 = servo2;
   }
 }
