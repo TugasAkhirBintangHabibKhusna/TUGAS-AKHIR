@@ -42,12 +42,20 @@
         .button-group { display: flex; flex-direction: column; gap: 15px; }
         
         .btn { padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; border: none; display: inline-block; }
+        
+        /* Tombol Poster */
         .btn-poster { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .btn-poster:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6); }
         
+        /* Tombol Download Jobsheet */
         .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
         .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
+        /* Tombol G-Drive Video Tutorial */
+        .btn-gdrive { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+        .btn-gdrive:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6); }
+
+        /* Tombol GitHub */
         .btn-github { background-color: #334155; color: white; border: 1px solid #475569; }
         .btn-github:hover { background-color: #475569; transform: translateY(-3px); }
 
@@ -55,7 +63,7 @@
         #poster-section {
             display: none;
             background-color: #1e293b;
-            padding: 70px 20px 40px 20px; /* Padding atas lebih besar untuk tombol kembali */
+            padding: 70px 20px 40px 20px; 
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
@@ -82,11 +90,11 @@
         .poster-pdf {
             width: 100%;
             max-width: 1000px;
-            height: 85vh; /* Menggunakan 85% dari tinggi layar agar proporsional */
+            height: 85vh; 
             border: none;
             border-radius: 8px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            background-color: #ffffff; /* Warna dasar putih jika PDF telat loading */
+            background-color: #ffffff; 
         }
 
         /* --- PENGATURAN PRINT KE PDF --- */
@@ -110,7 +118,6 @@
     <div id="home-section">
         <div class="home-container">
             <div class="logos">
-                <!-- Pastikan gambar logo ini masih ada di folder images -->
                 <img src="images/logo-polines-bulat.png" alt="Logo Polines">
                 <img src="images/logo-blu.png" alt="Logo BLU">
             </div>
@@ -119,9 +126,10 @@
             <h2>IoT Sorting Training Set: Portable Trainer Box<br>with 75cm Conveyor Actuator</h2>
             
             <div class="button-group">
-                <!-- Teks tombol disesuaikan sedikit -->
                 <button class="btn btn-poster" onclick="showPoster()">&#128196; Lihat Poster (PDF)</button>
                 <a href="JOBSHEET.docx" download class="btn btn-download">&#128197; Download Jobsheet (DOCX)</a>
+                <!-- TOMBOL BARU GOOGLE DRIVE -->
+                <a href="https://drive.google.com/drive/folders/1u8EQrBR2iJhh8bsDgE5okjzteiOyjIve?usp=sharing" target="_blank" class="btn btn-gdrive">&#127909; Video Tutorial (Google Drive)</a>
                 <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn btn-github">&#128279; Buka Source Code GitHub</a>
             </div>
         </div>
@@ -130,8 +138,6 @@
     <div id="poster-section">
         <button class="back-btn" onclick="showHome()">&#8592; Kembali</button>
         
-        <!-- PANGGIL FILE PDF DI SINI -->
-        <!-- Buat folder bernama 'dokumen' lalu masukkan file 'poster-a3.pdf' ke dalamnya -->
         <iframe src="dokumen/poster-a3.pdf" title="Poster Tugas Akhir" class="poster-pdf"></iframe>
         
     </div>
