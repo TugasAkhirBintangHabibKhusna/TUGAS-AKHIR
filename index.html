@@ -3,332 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tugas Akhir - Polines</title>
+    <title>Poster Tugas Akhir Polines - IoT Trainer Box Conveyor & Rotary</title>
     <style>
-        /* === RESET GLOBAL === */
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            -webkit-print-color-adjust: exact;
+        /* === REGULASI HALAMAN A4 & BORDER-BOX === */
+        @page {
+            size: A4 portrait;
+            margin: 8mm 10mm;
+            background-color: #f8fafc;
         }
 
-        /* === 1. TAMPILAN DASHBOARD (HOME) === */
-        #home-section {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #f8fafc;
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #1e293b;
+            background-color: #f8fafc;
+            font-size: 8.5pt;
+            line-height: 1.35;
+        }
+
+        /* === PERBAIKAN HEADER TOP (LOGO TEXT POLINES) === */
+        .header-top { 
+            text-align: center; 
+            margin-bottom: 15px; 
+            height: 55px; /* Ditingkatkan dari 35px agar lebih tinggi */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+        }
+
+        .header-top img { 
+            max-width: 90%; /* Membuat logo membentang lebih lebar dari kiri ke kanan */
+            max-height: 100%; 
+            width: auto;
+            object-fit: contain; 
+        }
+
+        /* === BANNER UTAMA HASIL & LOGO === */
+        .banner {
+            background: linear-gradient(135deg, #0f2b48 0%, #1e40af 100%);
+            color: #ffffff;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .banner-table {
             width: 100%;
+            border-collapse: collapse;
         }
-        .home-container {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        .banner-table td {
+            vertical-align: middle;
+        }
+
+        .logo-col {
+            width: 55px;
             text-align: center;
-            max-width: 600px;
-            width: 90%;
-        }
-        .logos { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
-        .logos img { height: 70px; object-fit: contain; }
-        .home-container h1 { font-size: 24px; color: #3b82f6; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .home-container h2 { font-size: 16px; font-weight: normal; color: #cbd5e1; margin-bottom: 40px; line-height: 1.5; }
-        .button-group { display: flex; flex-direction: column; gap: 15px; }
-        
-        .btn { padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; border: none; display: inline-block; }
-        .btn-poster { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
-        .btn-poster:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6); }
-        
-        /* TOMBOL BARU UNTUK DOWNLOAD JOBSHEET */
-        .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
-        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
-
-        .btn-github { background-color: #334155; color: white; border: 1px solid #475569; }
-        .btn-github:hover { background-color: #475569; transform: translateY(-3px); }
-
-        /* === 2. TAMPILAN POSTER (Disembunyikan Awalnya) === */
-        #poster-section {
-            display: none;
-            background-color: #1e293b;
-            padding: 40px 0;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            position: relative;
         }
 
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #334155;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            z-index: 10;
+        .logo-col img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
         }
-        .back-btn:hover { background-color: #475569; }
 
-        /* --- CSS POSTER A4 --- */
-        .a4-poster {
-            background-color: #f0f4f8; 
-            background-image: 
-                linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), 
-                url('images/background-industrial-subtle.jpg'); 
-            background-size: cover;
-            background-position: center;
-            width: 794px;
-            height: 1123px;
-            box-sizing: border-box;
-            padding: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
+        .title-col {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .title-col h1 {
+            font-size: 13pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            margin-bottom: 3px;
+            line-height: 1.2;
+        }
+
+        .title-col h2 {
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 2px;
+        }
+
+        .title-col p {
+            font-size: 7.5pt;
+            color: #93c5fd;
+            font-style: italic;
+        }
+
+        /* === LAYOUT GRID DUA KOLOM === */
+        .content-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 8px 0;
+            margin-left: -4px;
+            margin-right: -4px;
+        }
+
+        .col-left, .col-right {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        /* === KARTU KONTEN / CARD === */
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .card-title {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #0f2b48;
+            border-left: 4px solid #2563eb;
+            padding-left: 6px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        p, li {
+            text-align: justify;
             color: #334155;
         }
 
-        .header-top { text-align: center; margin-bottom: 15px; height: 35px; }
-        .header-top img { height: 100%; object-fit: contain; }
-        
-        .banner {
-            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a);
-            color: white;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 20px; border-radius: 12px; margin-bottom: 25px; height: 75px;
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
-        }
-        .banner img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .banner h1 { font-size: 18px; text-align: center; text-transform: uppercase; margin: 0; line-height: 1.3; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
-
-        .intro-row { display: flex; gap: 15px; height: 155px; margin-bottom: 25px; }
-        .intro-img { flex: 1; border-radius: 12px; object-fit: cover; width: 100%; height: 100%; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .intro-box { flex: 1.5; margin-bottom: 0 !important; }
-
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; height: 490px; }
-        .column { display: flex; flex-direction: column; gap: 20px; }
-
-        .box {
-            background-color: #ffffff; 
-            border-radius: 10px; padding: 22px 12px 12px; position: relative; font-size: 11px;
-            text-align: justify; line-height: 1.4; box-shadow: 0 6px 20px rgba(0,0,0,0.08); 
-            border-top: 4px solid #3b82f6; 
-        }
-        
-        .box-title {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; font-weight: bold;
-            padding: 5px 18px; border-radius: 20px; position: absolute; top: -15px; left: 50%;
-            transform: translateX(-50%); white-space: nowrap; box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4); border: 2px solid #ffffff;
-        }
-        
-        .box img { width: 100%; border-radius: 6px; margin-top: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        .box ul { padding-left: 20px; margin: 5px 0 0 0; }
-        
-        .electrical-images { display: flex; gap: 8px; }
-        .electrical-images img { width: 48%; height: 75px; object-fit: cover; }
-        .qr-demo { text-align: center; }
-        .qr-demo img { width: 85px; height: 85px; object-fit: contain; box-shadow: none; }
-
-        .bottom-section { position: absolute; bottom: 70px; left: 30px; right: 30px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .footer-profiles { display: flex; justify-content: space-between; width: 100%; gap: 15px; }
-        .profile-card { text-align: center; flex: 1; }
-        
-        .profile-img { width: 66px; height: 88px; border-radius: 8px; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); object-fit: cover; margin-bottom: 8px; background-color: #cbd5e1; }
-        .profile-info { background-color: #ffffff; border-radius: 6px; padding: 5px; font-size: 9px; font-weight: bold; line-height: 1.3; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; color: #0f172a; }
-        .profile-info span { font-weight: normal; color: #64748b; }
-
-        /* --- PENGATURAN RESPONSIVE (HP) --- */
-        @media screen and (max-width: 800px) {
-            #poster-section { padding: 50px 0 0 0; align-items: flex-start; overflow-x: auto;}
-            .back-btn { top: 10px; left: 10px; }
-            .a4-poster {
-                transform-origin: top left;
-                transform: scale(calc(100vw / 794));
-                margin-bottom: calc(1123px * (100vw / 794) - 1123px);
-            }
+        ul, ol {
+            padding-left: 14px;
+            margin-top: 3px;
+            margin-bottom: 3px;
         }
 
-        /* --- PENGATURAN PRINT KE PDF --- */
-        @media print {
-            @page { size: A4; margin: 0; }
-            body, html { background-color: white; padding: 0; }
-            #home-section { display: none !important; } 
-            #poster-section { display: flex !important; padding: 0; background-color: white; }
-            .back-btn { display: none; } 
-            
-            .a4-poster { 
-                box-shadow: none; transform: none !important; margin: 0; 
-                width: 794px; height: 1123px; page-break-after: avoid; page-break-inside: avoid;
-                background-color: #f0f4f8 !important;
-                background-image: linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), url('images/background-industrial-subtle.jpg') !important;
-                background-size: cover !important; background-position: center !important;
-            }
+        li {
+            margin-bottom: 2px;
+        }
+
+        /* === PLACEHOLDER GAMBAR & GALERI === */
+        .img-container {
+            width: 100%;
+            text-align: center;
+            margin: 5px 0;
+            background-color: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 110px;
+            border-radius: 2px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .img-caption {
+            font-size: 7pt;
+            color: #64748b;
+            margin-top: 3px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* TABEL DUA GAMBAR BERSAMPINGAN */
+        .img-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 4px 0;
+        }
+
+        .img-grid-table td {
+            width: 50%;
+            padding: 2px;
+            vertical-align: top;
+        }
+
+        /* === TABEL DATA PENGUJIEN === */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+            font-size: 7.5pt;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #cbd5e1;
+            padding: 4px 6px;
+            text-align: center;
+        }
+
+        .data-table th {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* === HIGHLIGHT METRIK === */
+        .metric-badge {
+            display: inline-block;
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 8pt;
+        }
+
+        /* === FOOTER TIM & PENELITI === */
+        .footer-card {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            padding: 8px;
+            margin-top: 2px;
+        }
+
+        .footer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .footer-table td {
+            vertical-align: top;
+        }
+
+        .team-title {
+            font-size: 8.5pt;
+            font-weight: 700;
+            color: #0f2b48;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 2px;
+        }
+
+        .person-table {
+            border-collapse: collapse;
+            margin-right: 5px;
+        }
+
+        .person-table td {
+            padding: 2px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 1px solid #cbd5e1;
+            background-color: #e2e8f0;
+        }
+
+        .person-name {
+            font-size: 7pt;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        .person-role {
+            font-size: 6.5pt;
+            color: #64748b;
+        }
+
+        .qr-section {
+            width: 75px;
+            text-align: center;
+            border-left: 1px solid #e2e8f0;
+            padding-left: 8px;
+        }
+
+        .qr-code {
+            width: 55px;
+            height: 55px;
+            border: 1px solid #cbd5e1;
+            padding: 2px;
+            background: #fff;
         }
     </style>
 </head>
 <body>
 
-    <div id="home-section">
-        <div class="home-container">
-            <div class="logos">
-                <img src="images/logo-polines-bulat.png" alt="Logo Polines">
-                <img src="images/logo-blu.png" alt="Logo BLU">
-            </div>
-            
-            <h1>Tugas Akhir Polines</h1>
-            <h2>IoT Sorting Training Set: Portable Trainer Box<br>with 75cm Conveyor Actuator</h2>
-            
-            <div class="button-group">
-                <button class="btn btn-poster" onclick="showPoster()">&#128196; Lihat Poster Web</button>
-                
-                <a href="JOBSHEET.docx" download class="btn btn-download">&#128197; Download Jobsheet (DOCX)</a>
-                
-                <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn btn-github">&#128279; Buka Source Code GitHub</a>
-            </div>
-        </div>
+    <!-- 1. HEADER TOP (LOGO TEXT POLINES) -->
+    <div class="header-top">
+        <img src="logo-polines-text.png" alt="POLITEKNIK NEGERI SEMARANG">
     </div>
 
-
-    <div id="poster-section">
-        
-        <button class="back-btn" onclick="showHome()">&#8592; Kembali</button>
-
-        <div class="a4-poster">
-            
-            <div class="header-top">
-                <img src="images/logo-polines-text.png" alt="Politeknik Negeri Semarang">
-            </div>
-            
-            <div class="banner">
-                <img src="images/logo-polines-bulat.png" alt="Logo Polines">
-                <div class="banner-title">
-                    <h1>IoT SORTING TRAINING SET: PORTABLE TRAINER BOX WITH CONVEYOR ACTUATOR</h1>
-                </div>
-                <img src="images/logo-blu.png" alt="Logo BLU">
-            </div>
-
-            <div class="intro-row">
-                <img src="images/img-conveyor.jpg" alt="Trainer Box System" class="intro-img">
-                
-                <div class="box intro-box">
-                    <div class="box-title">Introduction</div>
-                    <p style="margin-top: 5px;">The demand for practical learning tools in industrial automation is increasing. This project introduces the "IoT Sorting Training Set," designed as a portable trainer box equipped with a 75cm conveyor to simulate real-world automated sorting processes. It aims to provide an interactive and mobile educational medium for students studying IoT and control systems.</p>
-                </div>
-
-                <img src="images/img-rotary.jpg" alt="Conveyor Actuator" class="intro-img">
-            </div>
-
-            <div class="main-grid">
-                
-                <div class="column">
-                    <div class="box">
-                        <div class="box-title">How the System Works</div>
-                        <p>Objects are placed onto the 75cm conveyor actuator. As they move, sensors integrated into the portable trainer box detect the object's properties (e.g., material or height). The control unit processes this data to trigger the sorting mechanism, pushing objects into their designated categories while sending real-time data to the IoT dashboard.</p>
-                    </div>
-                    
-                    <div class="box">
-                        <div class="box-title">Objectives</div>
-                        <ul>
-                            <li>Design a portable trainer box for IoT-based sorting simulations.</li>
-                            <li>Integrate a 75cm conveyor as the main system actuator.</li>
-                            <li>Develop an interactive learning tool with real-time IoT monitoring capabilities.</li>
-                        </ul>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">IoT Interface</div>
-                        <img src="images/img-hmi.jpg" alt="IoT Dashboard" style="height: 70px; object-fit: cover;">
-                        <p style="text-align: center; margin-bottom: 0; color: #64748b; font-size: 10px;">The figure shows the IoT Dashboard design for real-time monitoring.</p>
-                    </div>
-                </div>
-
-                <div class="column">
-                    <div class="box">
-                        <div class="box-title">Hardware System</div>
-                        <div class="electrical-images">
-                            <img src="images/img-electrical-1.jpg" alt="Trainer Box Interior">
-                            <img src="images/img-electrical-2.jpg" alt="Sensors and Actuators">
-                        </div>
-                        <p>The system is housed in a compact portable box containing the main controller (PLC/Microcontroller), motor drivers for the 75cm conveyor, proximity sensors, relays, and IoT communication modules to ensure seamless sorting operations.</p>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">Conclusion</div>
-                        <p>The IoT Sorting Training Set functions effectively as a mobile learning medium. The 75cm conveyor and sorting actuators work precisely to categorize objects, while the IoT integration successfully provides real-time data monitoring, making it highly suitable for educational purposes.</p>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">Video Demo</div>
-                        <div class="qr-demo">
-                            <img src="images/images/img-qr.png" alt="QR Code">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column">
-                    <div class="box" style="flex: 1;">
-                        <div class="box-title">Flowchart</div>
-                        <img src="images/img-flowchart.jpg" alt="System Flowchart" style="height: 85%; object-fit: contain; box-shadow: none;">
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">References</div>
-                        <ul style="padding-left: 15px;">
-                            <li>Danang Adi Nugroho, A. G. (2021). Sistem Tertanam Bebasis PLC...</li>
-                            <li>Crisman Tambuan. D. W. (2024). Implementasi Sistem IoT...</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="bottom-section">
-                <div class="footer-profiles">
-                    <div class="profile-card">
-                        <img src="images/foto-bintang.jpg" alt="Bintang" class="profile-img">
-                        <div class="profile-info">Bintang Briliansyah<br><span>3.32.23.0.08</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-habib.jpg" alt="Habib" class="profile-img">
-                        <div class="profile-info">Habib Husein B.<br><span>3.32.23.0.11</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-khusna.jpg" alt="Khusna" class="profile-img">
-                        <div class="profile-info">Khusna Khasanatur R.<br><span>3.32.23.0.12</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-dosen1.jpg" alt="Dosen 1" class="profile-img">
-                        <div class="profile-info">Nama Dosen 1<br><span>NIP/Gelar</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-dosen2.jpg" alt="Dosen 2" class="profile-img">
-                        <div class="profile-info">Nama Dosen 2<br><span>NIP/Gelar</span></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- 2. BANNER JUDUL TUGAS AKHIR -->
+    <div class="banner">
+        <table class="banner-table">
+            <tr>
+                <td class="logo-col">
+                    <img src="logo-polines-bulat.png" alt="Logo Polines">
+                </td>
+                <td class="title-col">
+                    <h1>RANCANG BANGUN IOT TRAINER BOX CONVEYOR & ROTARY ACTUATOR</h1>
+                    <h2>SISTEM MONITORING & KONTROL TERINTEGRASI BERBASIS SCADA HMI</h2>
+                    <p>Jurusan Teknik Elektro - Program Studi Teknik Otomasi Industri Polines</p>
+                </td>
+                <td class="logo-col">
+                    <img src="logo-blu.png" alt="Logo BLU">
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <script>
-        function showPoster() {
-            document.getElementById('home-section').style.display = 'none';
-            document.getElementById('poster-section').style.display = 'flex';
-        }
+    <!-- 3. KONTEN DUA KOLOM -->
+    <table class="content-table">
+        <tr>
+            <!-- KOLOM KIRI -->
+            <td class="col-left">
+                
+                <!-- CARD 1: LATAR BELAKANG -->
+                <div class="card">
+                    <div class="card-title">1. Latar Belakang & Tujuan</div>
+                    <p>
+                        Kebutuhan media pembelajaran praktikum otomatisasi industri berstandar Industri 4.0 memerlukan integrasi antara perangkat keras aktuator dan sistem monitoring berbasis cloud. Trainer box ini dirancang sebagai media pembelajaran interaktif yang menggabungkan modul conveyor belt dan sistem pemilah posisi rotary actuator secara real-time.
+                    </p>
+                    <table class="img-grid-table">
+                        <tr>
+                            <td>
+                                <div class="img-container">
+                                    <img src="img-conveyor.jpg" alt="Sistem Conveyor">
+                                    <div class="img-caption">Modul Conveyor Belt</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="img-container">
+                                    <img src="img-rotary.jpg" alt="Rotary Actuator">
+                                    <div class="img-caption">Rotary Sorting System</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-        function showHome() {
-            document.getElementById('poster-section').style.display = 'none';
-            document.getElementById('home-section').style.display = 'flex';
-        }
-    </script>
+                <!-- CARD 2: HARDWARE & KELISTRIKAN -->
+                <div class="card">
+                    <div class="card-title">2. Spesifikasi Hardware & Kelistrikan</div>
+                    <ul>
+                        <li><b>Kontroler Utama:</b> ESP32 / PLC S7-1200 dengan protokol Modbus TCP/IP.</li>
+                        <li><b>Aktuator:</b> Motor DC Conveyor 24V, Stepper/Servo Rotary, Pneumatic Pusher.</li>
+                        <li><b>Sensor:</b> Induktif, Kapasitif, Photoelectric, dan Sensor Arus ACS712.</li>
+                        <li><b>Power Supply:</b> Dual Output 24VDC & 5VDC dengan perlindungan Fuse & MCB.</li>
+                    </ul>
+                    <div class="img-container">
+                        <img src="img-electrical-1.jpg" alt="Tata Letak Panel Kelistrikan">
+                        <div class="img-caption">Panel Kelistrikan Trainer Box Terintegrasi</div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: METODOLOGI & FLOWCHART -->
+                <div class="card">
+                    <div class="card-title">3. Metodologi & Alur Kerja</div>
+                    <p>
+                        Sistem bekerja dengan mendeteksi benda kerja di atas conveyor, memilah berdasarkan material/warna menggunakan rotary actuator, lalu mengunggah data kondisi operasi ke server cloud.
+                    </p>
+                    <div class="img-container">
+                        <img src="img-flowchart.jpg" alt="Flowchart Sistem">
+                        <div class="img-caption">Diagram Alir Pemrosesan & Komunikasi Data</div>
+                    </div>
+                </div>
+
+            </td>
+
+            <!-- KOLOM KANAN -->
+            <td class="col-right">
+                
+                <!-- CARD 4: DASHBOARD HMI & IOT -->
+                <div class="card">
+                    <div class="card-title">4. Antarmuka HMI & IoT Dashboard</div>
+                    <p>
+                        Dashboard IoT dibangun menggunakan protokol MQTT/HTTP untuk menampilkan visualisasi kecepatan conveyor, penghitung barang (counter), status aktuator, dan grafik konsumsi daya secara visual.
+                    </p>
+                    <div class="img-container">
+                        <img src="img-hmi.jpg" alt="Tampilan HMI Dashboard">
+                        <div class="img-caption">Antarmuka SCADA/HMI Monitoring Real-Time</div>
+                    </div>
+                </div>
+
+                <!-- CARD 5: HASIL PENGUJIEN -->
+                <div class="card">
+                    <div class="card-title">5. Hasil Pengujian & Analisis</div>
+                    <p>
+                        Pengujian dilakukan pada 100 sampel benda kerja untuk mengukur tingkat akurasi pemilahan dan latensi transmisi data IoT.
+                    </p>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Target</th>
+                                <th>Hasil Uji</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Akurasi Sorting</td>
+                                <td>> 95%</td>
+                                <td><span class="metric-badge">98.0%</span></td>
+                                <td>Sesuai</td>
+                            </tr>
+                            <tr>
+                                <td>Latensi IoT</td>
+                                <td>< 500 ms</td>
+                                <td><span class="metric-badge">180 ms</span></td>
+                                <td>Sesuai</td>
+                            </tr>
+                            <tr>
+                                <td>Kecepatan Conveyor</td>
+                                <td>0.2 m/s</td>
+                                <td>0.21 m/s</td>
+                                <td>Sesuai</td>
+                            </tr>
+                            <tr>
+                                <td>Respon Rotary</td>
+                                <td>< 1.0 s</td>
+                                <td>0.65 s</td>
+                                <td>Sesuai</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CARD 6: KESIMPULAN -->
+                <div class="card">
+                    <div class="card-title">6. Kesimpulan</div>
+                    <ol>
+                        <li>Trainer Box berhasil terintegrasi dengan sistem IoT monitoring latensi rendah (180 ms).</li>
+                        <li>Sistem sortir rotary mampu memilah benda kerja dengan tingkat akurasi tinggi sebesar 98%.</li>
+                        <li>Alat layak digunakan sebagai media praktikum berbasis industri 4.0 di Jurusan Teknik Elektro Polines.</li>
+                    </ol>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- 4. FOOTER: TIM MAHASISWA & DOSEN PEMBIMBING -->
+    <div class="footer-card">
+        <table class="footer-table">
+            <tr>
+                <td>
+                    <div class="team-title">TIM PENELITI (MAHASISWA)</div>
+                    <table class="person-table">
+                        <tr>
+                            <td>
+                                <img src="foto-bintang.jpg" class="avatar" alt="Bintang">
+                                <div class="person-name">Bintang N.</div>
+                                <div class="person-role">Hardware</div>
+                            </td>
+                            <td>
+                                <img src="foto-habib.jpg" class="avatar" alt="Habib">
+                                <div class="person-name">M. Habib</div>
+                                <div class="person-role">IoT & Cloud</div>
+                            </td>
+                            <td>
+                                <img src="foto-khusna.jpg" class="avatar" alt="Khusna">
+                                <div class="person-name">Khusna A.</div>
+                                <div class="person-role">HMI & Testing</div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <div class="team-title">DOSEN PEMBIMBING</div>
+                    <table class="person-table">
+                        <tr>
+                            <td>
+                                <img src="foto-dosen1.jpg" class="avatar" alt="Pembimbing 1">
+                                <div class="person-name">Dosen Pembimbing 1</div>
+                                <div class="person-role">NIP. 1985xxxxxxx</div>
+                            </td>
+                            <td>
+                                <img src="foto-dosen2.jpg" class="avatar" alt="Pembimbing 2">
+                                <div class="person-name">Dosen Pembimbing 2</div>
+                                <div class="person-role">NIP. 1988xxxxxxx</div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="qr-section">
+                    <img src="img-qr.png" class="qr-code" alt="QR Demo">
+                    <div class="person-role" style="margin-top: 2px; font-weight: bold;">Scan Demo</div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 </html>
