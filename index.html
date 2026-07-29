@@ -45,18 +45,17 @@
         .btn-poster { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .btn-poster:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6); }
         
-        /* TOMBOL BARU UNTUK DOWNLOAD JOBSHEET */
         .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
         .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
         .btn-github { background-color: #334155; color: white; border: 1px solid #475569; }
         .btn-github:hover { background-color: #475569; transform: translateY(-3px); }
 
-        /* === 2. TAMPILAN POSTER (Disembunyikan Awalnya) === */
+        /* === 2. TAMPILAN POSTER (Hanya Gambar) === */
         #poster-section {
             display: none;
             background-color: #1e293b;
-            padding: 40px 0;
+            padding: 60px 20px 40px 20px; /* Padding atas lebih besar untuk ruang tombol */
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
@@ -64,7 +63,7 @@
         }
 
         .back-btn {
-            position: absolute;
+            position: fixed; /* Diubah menjadi fixed agar tetap terlihat saat scroll */
             top: 20px;
             left: 20px;
             background-color: #334155;
@@ -75,101 +74,30 @@
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            z-index: 10;
+            z-index: 100;
         }
         .back-btn:hover { background-color: #475569; }
 
-        /* --- CSS POSTER A4 --- */
-        .a4-poster {
-            background-color: #f0f4f8; 
-            background-image: 
-                linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), 
-                url('images/background-industrial-subtle.jpg'); 
-            background-size: cover;
-            background-position: center;
-            width: 794px;
-            height: 1123px;
-            box-sizing: border-box;
-            padding: 30px;
+        .poster-image {
+            max-width: 100%;
+            height: auto;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            color: #334155;
-        }
-
-        .header-top { text-align: center; margin-bottom: 15px; height: 60px; } /* Tinggi ditingkatkan ke 90px agar gambar text polines semakin besar dan lebar */
-        .header-top img { height: 100%; object-fit: contain; }
-        
-        .banner {
-            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e3a8a);
-            color: white;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 20px; border-radius: 12px; margin-bottom: 25px; height: 75px;
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
-        }
-        .banner img { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .banner h1 { font-size: 18px; text-align: center; text-transform: uppercase; margin: 0; line-height: 1.3; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
-
-        .intro-row { display: flex; gap: 15px; height: 155px; margin-bottom: 25px; }
-        .intro-img { flex: 1; border-radius: 12px; object-fit: cover; width: 100%; height: 100%; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .intro-box { flex: 1.5; margin-bottom: 0 !important; }
-
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; height: 490px; }
-        .column { display: flex; flex-direction: column; gap: 20px; }
-
-        .box {
-            background-color: #ffffff; 
-            border-radius: 10px; padding: 22px 12px 12px; position: relative; font-size: 11px;
-            text-align: justify; line-height: 1.4; box-shadow: 0 6px 20px rgba(0,0,0,0.08); 
-            border-top: 4px solid #3b82f6; 
-        }
-        
-        .box-title {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; font-weight: bold;
-            padding: 5px 18px; border-radius: 20px; position: absolute; top: -15px; left: 50%;
-            transform: translateX(-50%); white-space: nowrap; box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4); border: 2px solid #ffffff;
-        }
-        
-        .box img { width: 100%; border-radius: 6px; margin-top: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        .box ul { padding-left: 20px; margin: 5px 0 0 0; }
-        
-        .electrical-images { display: flex; gap: 8px; }
-        .electrical-images img { width: 48%; height: 75px; object-fit: cover; }
-        .qr-demo { text-align: center; }
-        .qr-demo img { width: 85px; height: 85px; object-fit: contain; box-shadow: none; }
-
-        .bottom-section { position: absolute; bottom: 70px; left: 30px; right: 30px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .footer-profiles { display: flex; justify-content: space-between; width: 100%; gap: 15px; }
-        .profile-card { text-align: center; flex: 1; }
-        
-        .profile-img { width: 66px; height: 88px; border-radius: 8px; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); object-fit: cover; margin-bottom: 8px; background-color: #cbd5e1; }
-        .profile-info { background-color: #ffffff; border-radius: 6px; padding: 5px; font-size: 9px; font-weight: bold; line-height: 1.3; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; color: #0f172a; }
-        .profile-info span { font-weight: normal; color: #64748b; }
-
-        /* --- PENGATURAN RESPONSIVE (HP) --- */
-        @media screen and (max-width: 800px) {
-            #poster-section { padding: 50px 0 0 0; align-items: flex-start; overflow-x: auto;}
-            .back-btn { top: 10px; left: 10px; }
-            .a4-poster {
-                transform-origin: top left;
-                transform: scale(calc(100vw / 794));
-                margin-bottom: calc(1123px * (100vw / 794) - 1123px);
-            }
+            /* Opsional: Batasi lebar maksimal jika tidak ingin terlalu besar di layar monitor wide */
+            max-width: 1000px; 
         }
 
         /* --- PENGATURAN PRINT KE PDF --- */
         @media print {
-            @page { size: A4; margin: 0; }
-            body, html { background-color: white; padding: 0; }
+            @page { size: A3; margin: 0; } /* Set ukuran halaman PDF ke A3 */
+            body, html { background-color: white; padding: 0; margin: 0; }
             #home-section { display: none !important; } 
-            #poster-section { display: flex !important; padding: 0; background-color: white; }
+            #poster-section { display: flex !important; padding: 0; background-color: white; justify-content: center; align-items: center; height: 100vh;}
             .back-btn { display: none; } 
-            
-            .a4-poster { 
-                box-shadow: none; transform: none !important; margin: 0; 
-                width: 794px; height: 1123px; page-break-after: avoid; page-break-inside: avoid;
-                background-color: #f0f4f8 !important;
-                background-image: linear-gradient(rgba(240, 244, 248, 0.8), rgba(240, 244, 248, 0.8)), url('images/background-industrial-subtle.jpg') !important;
-                background-size: cover !important; background-position: center !important;
+            .poster-image {
+                box-shadow: none;
+                max-width: 100%;
+                max-height: 100vh;
+                object-fit: contain;
             }
         }
     </style>
@@ -196,127 +124,19 @@
 
     <div id="poster-section">
         <button class="back-btn" onclick="showHome()">&#8592; Kembali</button>
-        <div class="a4-poster">
-            
-            <div class="header-top">
-                <img src="images/logo-polines-text.png" alt="Politeknik Negeri Semarang">
-            </div>
-            
-            <div class="banner">
-                <img src="images/logo-polines-bulat.png" alt="Logo Polines">
-                <div class="banner-title">
-                    <h1>IoT SORTING TRAINING SET: PORTABLE TRAINER BOX WITH CONVEYOR ACTUATOR</h1>
-                </div>
-                <img src="images/logo-blu.png" alt="Logo BLU">
-            </div>
-
-            <div class="intro-row">
-                <img src="images/img-conveyor7.jpg" alt="Trainer Box System" class="intro-img">
-                
-                <div class="box intro-box">
-                    <div class="box-title">Introduction</div>
-                    <p style="margin-top: 4px;">The demand for practical learning tools in industrial automation is increasing. This project introduces the "IoT Sorting Training Set," designed as a portable trainer box equipped with a 75cm conveyor to simulate real-world automated sorting processes. It aims to provide an interactive and mobile educational medium for students studying IoT and control.</p>
-                </div>
-
-                <img src="images/img-rotary1.jpg" alt="Conveyor Actuator" class="intro-img">
-            </div>
-
-            <div class="main-grid">
-                
-                <div class="column">
-                    <div class="box">
-                        <div class="box-title">How the System Works</div>
-                        <p>Objects are placed onto the 75cm conveyor actuator. As they move, sensors integrated into the portable trainer box detect the object's properties (e.g., material or height). The control unit processes this data to trigger the sorting mechanism, pushing objects into their designated categories while sending real-time data to the IoT dashboard.</p>
-                    </div>
-                    
-                    <div class="box">
-                        <div class="box-title">Objectives</div>
-                        <ul>
-                            <li>Design a portable trainer box for IoT-based sorting simulations.</li>
-                            <li>Integrate a 75cm conveyor as the main system actuator.</li>
-                            <li>Develop an interactive learning tool with real-time IoT monitoring capabilities.</li>
-                        </ul>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">IoT Interface</div>
-                        <img src="images/img-hmi.jpg" alt="IoT Dashboard" style="height: 70px; object-fit: cover;">
-                        <p style="text-align: center; margin-bottom: 0; color: #64748b; font-size: 10px;">The figure shows the IoT Dashboard design for real-time monitoring.</p>
-                    </div>
-                </div>
-
-                <div class="column">
-                    <div class="box">
-                        <div class="box-title">Hardware System</div>
-                        <div class="electrical-images">
-                            <img src="images/img-electrical-1.jpg" alt="Trainer Box Interior">
-                            <img src="images/img-electrical-2.jpg" alt="Sensors and Actuators">
-                        </div>
-                        <p>The system is housed in a compact portable box containing the main controller (PLC/Microcontroller), motor drivers for the 75cm conveyor, proximity sensors, relays, and IoT communication modules to ensure seamless sorting operations.</p>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">Conclusion</div>
-                        <p>The IoT Sorting Training Set functions effectively as a mobile learning medium. The 75cm conveyor and sorting actuators work precisely to categorize objects, while the IoT integration successfully provides real-time data monitoring, making it highly suitable for educational purposes.</p>
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">Video Demo</div>
-                        <div class="qr-demo">
-                            <img src="images/images/img-qr.png" alt="QR Code">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column">
-                    <div class="box" style="flex: 1;">
-                        <div class="box-title">Flowchart</div>
-                        <img src="images/img-flowchart.jpg" alt="System Flowchart" style="height: 85%; object-fit: contain; box-shadow: none;">
-                    </div>
-
-                    <div class="box">
-                        <div class="box-title">References</div>
-                        <ul style="padding-left: 15px;">
-                            <li>Danang Adi Nugroho, A. G. (2021). Sistem Tertanam Bebasis PLC...</li>
-                            <li>Crisman Tambuan. D. W. (2024). Implementasi Sistem IoT...</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="bottom-section">
-                <div class="footer-profiles">
-                    <div class="profile-card">
-                        <img src="images/foto-bintang.jpg" alt="Bintang" class="profile-img">
-                        <div class="profile-info">Bintang Briliansyah<br><span>3.32.23.0.08</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-habib.jpg" alt="Habib" class="profile-img">
-                        <div class="profile-info">Habib Husein B.<br><span>3.32.23.0.11</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-khusna.jpg" alt="Khusna" class="profile-img">
-                        <div class="profile-info">Khusna Khasanatur R.<br><span>3.32.23.0.12</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-dosen1.jpg" alt="Dosen 1" class="profile-img">
-                        <div class="profile-info">Nama Dosen 1<br><span>NIP/Gelar</span></div>
-                    </div>
-                    <div class="profile-card">
-                        <img src="images/foto-dosen2.jpg" alt="Dosen 2" class="profile-img">
-                        <div class="profile-info">Nama Dosen 2<br><span>NIP/Gelar</span></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        
+        <!-- PANGGIL GAMBAR POSTER DI SINI -->
+        <!-- Pastikan nama file gambar Anda sesuai (misal: poster-a3.jpg atau poster.png) -->
+        <img src="images/poster-a3.jpg" alt="Poster Tugas Akhir" class="poster-image">
+        
     </div>
 
     <script>
         function showPoster() {
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('poster-section').style.display = 'flex';
+            // Scroll ke atas otomatis saat membuka poster
+            window.scrollTo(0, 0);
         }
 
         function showHome() {
