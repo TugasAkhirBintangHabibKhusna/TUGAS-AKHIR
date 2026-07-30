@@ -52,6 +52,10 @@
         .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
         .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
+        /* Tombol Download Jurnal TA */
+        .btn-jurnal { background: linear-gradient(90deg, #0d9488, #0f766e); color: white; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4); }
+        .btn-jurnal:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(13, 148, 136, 0.6); }
+
         /* Tombol Download Arduino Uno */
         .btn-arduino { background: linear-gradient(90deg, #0284c7, #0369a1); color: white; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
         .btn-arduino:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6); }
@@ -63,6 +67,10 @@
         /* Tombol G-Drive Video Tutorial */
         .btn-gdrive { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
         .btn-gdrive:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6); }
+
+        /* Tombol Akses G-Drive (Folder Baru) */
+        .btn-gdrive-2 { background: linear-gradient(90deg, #e11d48, #be123c); color: white; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4); }
+        .btn-gdrive-2:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(225, 29, 72, 0.6); }
 
         /* Tombol Program HMI */
         .btn-hmi { background: linear-gradient(90deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); }
@@ -142,11 +150,17 @@
                 <button class="btn btn-poster" onclick="showPoster()">&#128196; Lihat Poster (PDF)</button>
                 <a href="JOBSHEET.docx" download class="btn btn-download">&#128197; Download Jobsheet (DOCX)</a>
                 
-                <!-- TOMBOL DOWNLOAD PROGRAM MIKROKONTROLER (NEW) -->
+                <!-- TOMBOL DOWNLOAD JURNAL TA (NEW) -->
+                <a href="Jurnal TA.pdf" download class="btn btn-jurnal">&#128214; Download Jurnal TA (PDF)</a>
+
+                <!-- TOMBOL DOWNLOAD PROGRAM MIKROKONTROLER -->
                 <a href="arduinouno.ino" download class="btn btn-arduino">&#128229; Download Arduino Uno (.ino)</a>
                 <a href="esp32.ino" download class="btn btn-esp32">&#128229; Download ESP32 (.ino)</a>
 
+                <!-- TOMBOL GOOGLE DRIVE -->
+                <a href="https://drive.google.com/drive/folders/1wqS9Fc-tlFEZVIujOdF_rHssQQbpjjlj?usp=sharing" target="_blank" class="btn btn-gdrive-2">&#128194; Folder Dokumen TA (Google Drive)</a>
                 <a href="https://drive.google.com/drive/folders/1u8EQrBR2iJhh8bsDgE5okjzteiOyjIve?usp=sharing" target="_blank" class="btn btn-gdrive">&#127909; Video Tutorial (Google Drive)</a>
+                
                 <!-- TOMBOL PROGRAM HMI -->
                 <a href="https://drive.google.com/drive/folders/1S-iuO1phEbfIM2qCSm0z_uYxPyxrCILT" target="_blank" class="btn btn-hmi">&#128187; Program HMI (Google Drive)</a>
                 <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn btn-github">&#128279; Buka Source Code GitHub</a>
