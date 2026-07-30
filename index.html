@@ -52,6 +52,14 @@
         .btn-download { background: linear-gradient(90deg, #10b981, #059669); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
         .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
+        /* Tombol Download Arduino Uno */
+        .btn-arduino { background: linear-gradient(90deg, #0284c7, #0369a1); color: white; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+        .btn-arduino:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6); }
+
+        /* Tombol Download ESP32 */
+        .btn-esp32 { background: linear-gradient(90deg, #dc2626, #b91c1c); color: white; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
+        .btn-esp32:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6); }
+
         /* Tombol G-Drive Video Tutorial */
         .btn-gdrive { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
         .btn-gdrive:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6); }
@@ -133,8 +141,13 @@
             <div class="button-group">
                 <button class="btn btn-poster" onclick="showPoster()">&#128196; Lihat Poster (PDF)</button>
                 <a href="JOBSHEET.docx" download class="btn btn-download">&#128197; Download Jobsheet (DOCX)</a>
+                
+                <!-- TOMBOL DOWNLOAD PROGRAM MIKROKONTROLER (NEW) -->
+                <a href="arduinouno.ino" download class="btn btn-arduino">&#128229; Download Arduino Uno (.ino)</a>
+                <a href="esp32.ino" download class="btn btn-esp32">&#128229; Download ESP32 (.ino)</a>
+
                 <a href="https://drive.google.com/drive/folders/1u8EQrBR2iJhh8bsDgE5okjzteiOyjIve?usp=sharing" target="_blank" class="btn btn-gdrive">&#127909; Video Tutorial (Google Drive)</a>
-                <!-- TOMBOL PROGRAM HMI (NEW) -->
+                <!-- TOMBOL PROGRAM HMI -->
                 <a href="https://drive.google.com/drive/folders/1S-iuO1phEbfIM2qCSm0z_uYxPyxrCILT" target="_blank" class="btn btn-hmi">&#128187; Program HMI (Google Drive)</a>
                 <a href="https://github.com/TugasAkhirBintangHabibKhusna/TUGAS-AKHIR" target="_blank" class="btn btn-github">&#128279; Buka Source Code GitHub</a>
             </div>
